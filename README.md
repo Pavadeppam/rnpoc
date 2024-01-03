@@ -1,2 +1,14 @@
-# rnpoc
-POC app to implement login, tap into native device features and profile update slider features
+# React Native Templatw with Typescript
+
+steps to reproduce:
+
+- yarn install
+
+## Android
+
+- yarn android
+
+## ios
+
+- pod install
+- yarn ios
