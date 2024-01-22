@@ -44,7 +44,7 @@ const Login = ({ navigation }: propsT) => {
 
   const handleSubmit = async () => {
     if (isFormValid) {
-      dispatch(userLogin({ username: 'kminchelle', password: '0lelplR' }));
+      // dispatch(userLogin({ username: 'kminchelle', password: '0lelplR' }));
       dispatch(
         updateUser({
           email: name,

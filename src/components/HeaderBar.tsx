@@ -6,27 +6,64 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import person from '../assets/person.png';
 
 import { useAppDispatch, useAppSelector } from '../store/useAppStore';
 import { setIsProfleSelected } from '../store/profileSelectedSlice';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import type { PropsWithChildren } from 'react';
-
+import { ImagePickerResponse, launchCamera } from 'react-native-image-picker';
 import { setIsExpanded as setIsExpandedStore } from '../store/caretSateSlice';
 import VerticalLine from './VerticalLine';
+import storeData, { storeDataT } from '../utilities/storeData';
+import retrieveData from '../utilities/retrieveData';
 
 type IconProps = PropsWithChildren<{
   name: string;
 }>;
 
 const HeaderBar = () => {
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined
+  );
   const isProfileSelected = useAppSelector((state) => state.profile);
 
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.user);
 
   const isExpandedStore = useAppSelector((state) => state.caret.isExpanded);
+
+  const openCamera = () => {
+    const options = {
+      storageOption: {
+        path: 'images',
+        mediatype: 'photo',
+      },
+      includeBase64: true,
+    };
+    launchCamera(
+      {
+        mediaType: 'photo',
+        includeBase64: true,
+      },
+      (response: ImagePickerResponse) => {
+        console.log('Resopnse=>', response);
+        if (response.didCancel) {
+          console.log('user cancelled image picke');
+        } else if (response.errorCode) {
+          console.log(
+            'ImagePicker Error: ',
+            response.errorCode + '-' + response.errorMessage
+          );
+        } else {
+          console.log(response.assets?.[0]?.uri);
+          setSelectedImage(response.assets?.[0]?.uri);
+          storeData({ key: 'user', value: response.assets?.[0]?.uri || '' });
+        }
+      }
+    );
+  };
 
   return (
     <View style={styles.constainer}>
@@ -37,25 +74,45 @@ const HeaderBar = () => {
         <Text style={styles.profileText}>{userData.role}</Text>
       </View>
       {(userData.name || userData.role) && (
-        <VerticalLine height={45} color={'black'} />
+        <VerticalLine height={50} color={'black'} />
       )}
 
       <View style={styles.iconContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            Alert.alert(
-              '*WARNING*',
-              'Please upgrade your device as camera is not accessible.'
-            );
-          }}
-        >
-          <Image
-            style={styles.imageItem}
-            source={{
-              uri: 'https://reactnative.dev/img/tiny_logo.png',
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              openCamera();
+              //   Alert.alert(
+              //     '*WARNING*',
+              //     'Please upgrade your device as camera is not accessible.'
+              //   );
             }}
-          />
-        </TouchableOpacity>
+          >
+            {selectedImage ? (
+              <Image
+                style={styles.imageItem}
+                source={{
+                  // uri: 'https://reactnative.dev/img/tiny_logo.png',
+                  uri:
+                    selectedImage ||
+                    'https://reactnative.dev/img/tiny_logo.png',
+                }}
+              />
+            ) : (
+              // <View>
+              // <Icon name={'user'} size={30} color="#626262" />
+              <Image source={person} style={styles.personContainer} />
+              // </View>
+            )}
+            {/* <Image
+              style={styles.imageItem}
+              source={{
+                // uri: 'https://reactnative.dev/img/tiny_logo.png',
+                uri: selectedImage || 'https://reactnative.dev/img/tiny_logo.png',
+              }}
+            /> */}
+          </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           onPress={() => {
@@ -123,6 +180,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 5,
     marginHorizontal: 5,
+    marginBottom: 3,
   },
   modalContainer: {
     borderColor: 'red',
@@ -139,5 +197,18 @@ const styles = StyleSheet.create({
   },
   iconS: {
     marginHorizontal: 5,
+    borderRadius: 999,
+  },
+  avatarContainer: {
+    borderRadius: 50,
+    borderWidth: 1,
+  },
+  personContainer: {
+    width: 55,
+    height: 55,
+    borderRadius: 50,
+    // alignSelf: 'center',
+    // marginTop: 5,
+    // marginHorizontal: 5,
   },
 });

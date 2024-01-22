@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { useAppDispatch } from '../store/useAppStore';
+import { useAppDispatch, useAppSelector } from '../store/useAppStore';
 import { userT, updateUser } from '../store/userSlice';
 
 type propsT = {
@@ -38,6 +38,8 @@ const UpdateProfile = ({ propsUser }: propsT) => {
   });
 
   const dispatch = useAppDispatch();
+  const stateUser = useAppSelector((state) => state.user);
+  console.log(stateUser.name);
 
   useEffect(() => {
     const locationData = data.find((item) => item.value === propsUser.role);
