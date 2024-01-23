@@ -47,8 +47,8 @@ const Login = ({ navigation }: propsT) => {
       // dispatch(userLogin({ username: 'kminchelle', password: '0lelplR' }));
       dispatch(
         updateUser({
-          email: name,
-          name: '',
+          email: '',
+          name: name,
           location: '',
           role: '',
         })

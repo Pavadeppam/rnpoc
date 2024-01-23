@@ -39,12 +39,18 @@ const Home = ({ navigation }: propsT) => {
         </View>
       )}
 
-      <TouchableOpacity
-        style={styles.buttonS}
-        onPress={() => navigation.navigate('Login')}
-      >
-        <Text style={styles.buttonLabel}>Logout</Text>
-      </TouchableOpacity>
+      {/* <View> */}
+      <View style={styles.buttonProducts}>
+        <TouchableOpacity onPress={() => navigation.navigate('Products')}>
+          <Text style={styles.buttonLabel}>Products</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonLogout}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.buttonLabel}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+      {/* </View> */}
     </View>
   );
 };
@@ -81,8 +87,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
   },
-  buttonS: {
-    width: 100,
+  buttonProducts: {
+    width: 110,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
@@ -90,7 +96,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#bcbcbc',
     position: 'absolute',
     top: 300,
-    left: 150,
+    left: 250,
+    flexDirection: 'row',
+  },
+  buttonLogout: {
+    width: 110,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginTop: 320,
+    backgroundColor: '#bcbcbc',
+    position: 'absolute',
+    top: 300,
+    left: 50,
+    flexDirection: 'row',
   },
   buttonLabel: {
     padding: 10,

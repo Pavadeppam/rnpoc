@@ -14,14 +14,14 @@ const Products = () => {
 
   return (
     <View>
-      <Text>Products</Text>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           return <ProductCard item={item} />;
         }}
       />
+      {/* <Text>{JSON.stringify(products)}</Text> */}
     </View>
   );
 };

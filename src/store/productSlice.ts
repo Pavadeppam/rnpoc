@@ -31,10 +31,11 @@ export const fetchProducts = createAsyncThunk(
   'product/allproducts',
   async (thunkAPI) => {
     try {
-      const response = await API.get('/products');
+      const response = await API.get('https://dummyjson.com/products');
       return response.data;
+      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.warn(error);
       throw error;
     }
   }

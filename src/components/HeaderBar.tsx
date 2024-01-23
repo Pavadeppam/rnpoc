@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     gap: 5,
+    paddingLeft: 5,
   },
   iconS: {
     marginHorizontal: 5,

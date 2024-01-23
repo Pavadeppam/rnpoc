@@ -3,11 +3,13 @@ import Login from '../screens/Login';
 import Home from '../screens/Home';
 import HeaderBar from '../components/HeaderBar';
 import CameraScreen from '../screens/CameraScreen';
+import Products from '../screens/Products';
 
 export type StackRootParamList = {
   Login: undefined;
   Home: undefined;
   CameraScreen: undefined;
+  Products: undefined;
 };
 
 const AppNavigator = () => {
@@ -21,6 +23,9 @@ const AppNavigator = () => {
 
         headerTintColor: '#fff',
         headerTitleAlign: 'center',
+        headerRight: () => {
+          return <HeaderBar />;
+        },
       }}
     >
       <Stack.Screen
@@ -34,9 +39,9 @@ const AppNavigator = () => {
         options={{
           title: '',
           headerBackVisible: false,
-          headerRight: () => {
-            return <HeaderBar />;
-          },
+          // headerRight: () => {
+          //   return <HeaderBar />;
+          // },
         }}
       />
       <Stack.Screen
@@ -45,6 +50,17 @@ const AppNavigator = () => {
         options={{
           title: '',
           headerBackVisible: true,
+        }}
+      />
+      <Stack.Screen
+        name="Products"
+        component={Products}
+        options={{
+          title: '',
+          headerBackVisible: true,
+          // headerRight: () => {
+          //   return <HeaderBar />;
+          // },
         }}
       />
     </Stack.Navigator>

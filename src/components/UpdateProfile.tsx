@@ -39,7 +39,7 @@ const UpdateProfile = ({ propsUser }: propsT) => {
 
   const dispatch = useAppDispatch();
   const stateUser = useAppSelector((state) => state.user);
-  console.log(stateUser.name);
+  // console.warn(stateUser);
 
   useEffect(() => {
     const locationData = data.find((item) => item.value === propsUser.role);
